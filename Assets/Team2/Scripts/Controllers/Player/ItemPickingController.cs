@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace MatrixJam.Team2
 {
+    [RequireComponent(typeof(PlayerController))]
     public class ItemPickingController : MonoBehaviour
     {
         [SerializeField] 
@@ -11,6 +12,12 @@ namespace MatrixJam.Team2
         private float rotateSpeed;
 
         private Pickable pickable;
+        private PlayerController playerController;
+
+        private void Awake()
+        {
+            playerController = GetComponent<PlayerController>();
+        }
 
         private void Update()
         {
@@ -30,8 +37,13 @@ namespace MatrixJam.Team2
 
             if (IsPickablePicked())
             {
+                playerController.enabled = false;
                 MovePickable(mousePosition);
                 RotatePickable(mousePosition);
+            }
+            else
+            {
+                playerController.enabled = true;
             }
         }
 
